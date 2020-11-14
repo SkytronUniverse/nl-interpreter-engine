@@ -19,7 +19,7 @@ const (
 //Sentimenter interface defines sentiment interpretation functions
 //go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 . Sentimenter
 type Sentimenter interface {
-	InterpretSentiment(http web.Client) ([]byte, error)
+	InterpretSentiment(file string) ([]byte, error)
 }
 
 //Client struct manages api requests

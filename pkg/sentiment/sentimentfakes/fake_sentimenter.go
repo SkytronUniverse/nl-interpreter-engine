@@ -5,14 +5,13 @@ import (
 	"sync"
 
 	"github.com/nl-interpreter-engine/pkg/sentiment"
-	"github.com/nl-interpreter-engine/web"
 )
 
 type FakeSentimenter struct {
-	InterpretSentimentStub        func(web.Client) ([]byte, error)
+	InterpretSentimentStub        func(string) ([]byte, error)
 	interpretSentimentMutex       sync.RWMutex
 	interpretSentimentArgsForCall []struct {
-		arg1 web.Client
+		arg1 string
 	}
 	interpretSentimentReturns struct {
 		result1 []byte
@@ -26,11 +25,11 @@ type FakeSentimenter struct {
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeSentimenter) InterpretSentiment(arg1 web.Client) ([]byte, error) {
+func (fake *FakeSentimenter) InterpretSentiment(arg1 string) ([]byte, error) {
 	fake.interpretSentimentMutex.Lock()
 	ret, specificReturn := fake.interpretSentimentReturnsOnCall[len(fake.interpretSentimentArgsForCall)]
 	fake.interpretSentimentArgsForCall = append(fake.interpretSentimentArgsForCall, struct {
-		arg1 web.Client
+		arg1 string
 	}{arg1})
 	stub := fake.InterpretSentimentStub
 	fakeReturns := fake.interpretSentimentReturns
@@ -51,13 +50,13 @@ func (fake *FakeSentimenter) InterpretSentimentCallCount() int {
 	return len(fake.interpretSentimentArgsForCall)
 }
 
-func (fake *FakeSentimenter) InterpretSentimentCalls(stub func(web.Client) ([]byte, error)) {
+func (fake *FakeSentimenter) InterpretSentimentCalls(stub func(string) ([]byte, error)) {
 	fake.interpretSentimentMutex.Lock()
 	defer fake.interpretSentimentMutex.Unlock()
 	fake.InterpretSentimentStub = stub
 }
 
-func (fake *FakeSentimenter) InterpretSentimentArgsForCall(i int) web.Client {
+func (fake *FakeSentimenter) InterpretSentimentArgsForCall(i int) string {
 	fake.interpretSentimentMutex.RLock()
 	defer fake.interpretSentimentMutex.RUnlock()
 	argsForCall := fake.interpretSentimentArgsForCall[i]
